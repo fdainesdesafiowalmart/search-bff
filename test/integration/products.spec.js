@@ -47,10 +47,9 @@ describe('Search Endpoint', () => {
 
       const res = await request(app)
         .get('/search')
-        .query({ pattern: 'fx' })
 
       expect(res.statusCode).toEqual(400)
-      expect(res.body).toStrictEqual({ message: 'Invalid search pattern. It has to be at least 3 characters in length.' })
+      expect(res.body).toStrictEqual({ message: 'Invalid search pattern' })
     })
 
   })

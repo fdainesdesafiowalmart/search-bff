@@ -1,7 +1,7 @@
 const isValidPattern = (pattern) => {
   if(pattern === undefined) return false
   if(pattern === null) return false
-  if(pattern.length<3) return false
+  if(pattern.trim().length===0) return false
   return true
 }
 

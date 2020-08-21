@@ -25,24 +25,8 @@ describe('Validators:SearchPatterValidator', () => {
     expect(result).toBe(false)
   })
 
-  it('should return false for pattern of length 2', async () => {
+  it('should return true for valid pattern', async () => {
     const pattern = 'He'
-
-    const result = isValidPattern(pattern)
-
-    expect(result).toBe(false)
-  })
-
-  it('should return false for pattern of length 3', async () => {
-    const pattern = 'Foo'
-
-    const result = isValidPattern(pattern)
-
-    expect(result).toBe(true)
-  })
-
-  it('should return false for pattern with more than 3 characters', async () => {
-    const pattern = 'Hello World'
 
     const result = isValidPattern(pattern)
 
