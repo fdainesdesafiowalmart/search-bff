@@ -40,5 +40,18 @@ describe('Search Endpoint', () => {
       expect(res.body).toStrictEqual({ message: 'Error interno' })
     })
 
+    it('should return status code 400 when the search pattern is invalid', async () => {
+      repositoryMock.findProducts.mockImplementation(() => {
+        throw new Error('something bad')
+      })
+
+      const res = await request(app)
+        .get('/search')
+        .query({ pattern: 'fx' })
+
+      expect(res.statusCode).toEqual(400)
+      expect(res.body).toStrictEqual({ message: 'Invalid search pattern. It has to be at least 3 characters in length.' })
+    })
+
   })
 })
