@@ -18,10 +18,24 @@ describe('Application:UseCases', () => {
         return { ...mockResponse }
       })
       const searchPattern = 'x1234'
+      const sortCriteria = 'id'
 
       const result = await searchProducts(mockRepository, { pattern: searchPattern })
 
-      expect(mockRepository.findProducts).toHaveBeenCalledWith(searchPattern)
+      expect(mockRepository.findProducts).toHaveBeenCalledWith(searchPattern, sortCriteria)
+      expect(result).toStrictEqual(mockResponse)
+    })
+
+    it('should call findProducts passing sort criteria', async () => {
+      mockRepository.findProducts.mockImplementation(() => {
+        return { ...mockResponse }
+      })
+      const searchPattern = 'x1234'
+      const sortCriteria = 'foobar'
+
+      const result = await searchProducts(mockRepository, { pattern: searchPattern, orderby: sortCriteria })
+
+      expect(mockRepository.findProducts).toHaveBeenCalledWith(searchPattern, sortCriteria)
       expect(result).toStrictEqual(mockResponse)
     })
 
@@ -30,10 +44,11 @@ describe('Application:UseCases', () => {
         throw new Error('error details')
       })
       const searchPattern = '123'
+      const sortCriteria = 'id'
 
       const result = await searchProducts(mockRepository, { pattern: searchPattern })
 
-      expect(mockRepository.findProducts).toHaveBeenCalledWith(searchPattern)
+      expect(mockRepository.findProducts).toHaveBeenCalledWith(searchPattern, sortCriteria)
       expect(result).toBe(undefined)
     })
 

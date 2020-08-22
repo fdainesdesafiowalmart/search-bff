@@ -21,11 +21,11 @@ const resolveRequestParams = (pattern, orderby) => {
   }
 }
 
-const getProducts = async (pattern) => {
+const getProducts = async (pattern, orderby) => {
   const productsServiceUrl = process.env.SEARCH_SERVICE_URL
   const endpoint = `${productsServiceUrl}/search`
 
-  return axios.get(endpoint, resolveRequestParams(pattern))
+  return axios.get(endpoint, resolveRequestParams(pattern, orderby))
 }
 
 module.exports = {

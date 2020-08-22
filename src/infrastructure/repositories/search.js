@@ -1,8 +1,8 @@
 const { getProducts } = require('../clients/search')
 
-const findProducts = async (pattern) => {
+const findProducts = async (pattern, orderby) => {
   try {
-    const response = await getProducts(pattern)
+    const response = await getProducts(pattern, orderby)
 
     if (response.status === 200) {
       return response.data
