@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
+const { checkApiKey } = require('../middlewares/checkapikey')
 const { healthCheck } = require('../controllers/health')
 const { getProducts } = require('../controllers/search')
 
@@ -17,6 +18,6 @@ const { getProducts } = require('../controllers/search')
 */
 router.get('/health', healthCheck)
 
-router.get('/search', getProducts)
+router.get('/search', checkApiKey, getProducts)
 
 module.exports = router

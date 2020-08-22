@@ -1,6 +1,9 @@
 jest.mock('infrastructure/repositories/search')
 const repositoryMock = require('infrastructure/repositories/search')
 
+jest.mock('infrastructure/core/apikey')
+const apiKeyMock = require('infrastructure/core/apikey')
+
 const request = require('supertest')
 const app = require('index')
 
@@ -18,6 +21,7 @@ describe('Search Endpoint', () => {
       repositoryMock.findProducts.mockImplementation(() => {
         return { ...baseResponse }
       })
+      apiKeyMock.isValidApiKey.mockImplementation(() => true)
 
       const expectedResponse = {
         ...baseResponse,
@@ -36,6 +40,7 @@ describe('Search Endpoint', () => {
       repositoryMock.findProducts.mockImplementation(() => {
         throw new Error('something bad')
       })
+      apiKeyMock.isValidApiKey.mockImplementation(() => true)
 
       const res = await request(app)
         .get('/search')
@@ -49,6 +54,7 @@ describe('Search Endpoint', () => {
       repositoryMock.findProducts.mockImplementation(() => {
         throw new Error('something bad')
       })
+      apiKeyMock.isValidApiKey.mockImplementation(() => true)
 
       const res = await request(app)
         .get('/search')
@@ -57,5 +63,19 @@ describe('Search Endpoint', () => {
       expect(res.body).toStrictEqual({ message: 'Invalid search pattern' })
     })
 
+    it('should return status code 401 when api key is not valid', async () => {
+      repositoryMock.findProducts.mockImplementation(() => {
+        return [{
+          id: 9999,
+          foo: 'bar'
+        }]
+      })
+      apiKeyMock.isValidApiKey.mockImplementation(() => false)
+
+      const res = await request(app)
+        .get('/search')
+
+      expect(res.statusCode).toEqual(401)
+    })
   })
 })
