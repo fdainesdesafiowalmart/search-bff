@@ -7,7 +7,7 @@ const swaggerOptions = {
   swaggerDefinition: {
     info: {
       title: 'Search Backend for Frontend',
-      description: 'Backend for Frontend that exposes search functionalities to the Web Application',
+      description: 'Exposes search capabilities to Search Web Application',
       contact: {
         name: 'Francisco Daines'
       },
