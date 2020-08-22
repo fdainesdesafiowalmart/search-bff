@@ -57,7 +57,6 @@ describe('Repositories:Search', () => {
       }
 
       const response = await findProducts(1234)
-      console.log(response)
 
       expect(response).toStrictEqual(expectedResponse)
     })
