@@ -19,12 +19,17 @@ describe('Search Endpoint', () => {
         return { ...baseResponse }
       })
 
+      const expectedResponse = {
+        ...baseResponse,
+        totalPages: 1
+      }
+
       const res = await request(app)
         .get('/search')
         .query({ pattern: 'Test1' })
 
       expect(res.statusCode).toEqual(200)
-      expect(res.body).toStrictEqual(baseResponse)
+      expect(res.body).toStrictEqual(expectedResponse)
     })
 
     it('should return status code 500 when an error occurred ', async () => {

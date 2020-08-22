@@ -4,6 +4,7 @@ describe('Application:UseCases', () => {
   describe('Search Products', () => {
     const mockResponse = {
       total: 1,
+      totalPages: 1,
       products: [
         { foo: 'bar1', price: 100 }
       ]
@@ -18,10 +19,10 @@ describe('Application:UseCases', () => {
       })
       const searchPattern = 'x1234'
 
-      const result = await searchProducts(mockRepository, searchPattern)
+      const result = await searchProducts(mockRepository, { pattern: searchPattern })
 
-      expect(result).toStrictEqual(mockResponse)
       expect(mockRepository.findProducts).toHaveBeenCalledWith(searchPattern)
+      expect(result).toStrictEqual(mockResponse)
     })
 
     it('should return undefined when an error occurred', async () => {
@@ -30,7 +31,7 @@ describe('Application:UseCases', () => {
       })
       const searchPattern = '123'
 
-      const result = await searchProducts(mockRepository, searchPattern)
+      const result = await searchProducts(mockRepository, { pattern: searchPattern })
 
       expect(mockRepository.findProducts).toHaveBeenCalledWith(searchPattern)
       expect(result).toBe(undefined)
