@@ -8,6 +8,8 @@ const request = require('supertest')
 const app = require('index')
 
 describe('Search Endpoint', () => {
+  const contextUrl = '/search-bff/v1'
+
   afterEach(async () => await app.close())
 
   describe('GET /search', () => {
@@ -29,7 +31,7 @@ describe('Search Endpoint', () => {
       }
 
       const res = await request(app)
-        .get('/search')
+        .get(contextUrl + '/search')
         .query({ pattern: 'Test1' })
 
       expect(res.statusCode).toEqual(200)
@@ -43,7 +45,7 @@ describe('Search Endpoint', () => {
       apiKeyMock.isValidApiKey.mockImplementation(() => true)
 
       const res = await request(app)
-        .get('/search')
+        .get(contextUrl + '/search')
         .query({ pattern: 'Test1' })
 
       expect(res.statusCode).toEqual(500)
@@ -57,7 +59,7 @@ describe('Search Endpoint', () => {
       apiKeyMock.isValidApiKey.mockImplementation(() => true)
 
       const res = await request(app)
-        .get('/search')
+        .get(contextUrl + '/search')
 
       expect(res.statusCode).toEqual(400)
       expect(res.body).toStrictEqual({ message: 'Invalid search pattern' })
@@ -73,7 +75,7 @@ describe('Search Endpoint', () => {
       apiKeyMock.isValidApiKey.mockImplementation(() => false)
 
       const res = await request(app)
-        .get('/search')
+        .get(contextUrl + '/search')
 
       expect(res.statusCode).toEqual(401)
     })

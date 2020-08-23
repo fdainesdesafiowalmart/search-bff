@@ -3,7 +3,7 @@ const app = require('./infrastructure/core/server')
 const config = require('./infrastructure/core/config')
 const swaggerRouter = require('./infrastructure/core/swagger')
 
-app.use('/', router)
+app.use(config.application.prefixURL, router)
 app.use('/api-doc', swaggerRouter)
 
 const server = app.listen(config.application.port, () => {
